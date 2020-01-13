@@ -1,0 +1,33 @@
+﻿<Window x:Class="CarBookingGUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CarBookingGUI"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+	<DockPanel >
+		<Menu DockPanel.Dock="Top">
+			<MenuItem Header="Car Operations">
+				<MenuItem Header="List All Cars" Click="Button_Click"/>
+			</MenuItem>
+		</Menu>
+		<Grid>
+			<DataGrid ItemsSource="{Binding FilteredCars}" IsReadOnly="True" Name="CarGrid">
+			</DataGrid>
+		</Grid>
+
+		<WrapPanel Orientation="Vertical">
+			<DatePicker SelectedDate="{Binding Path=SelectedDate}"></DatePicker>
+			<Button Click="Filter_Cars">Show available cars for selected date</Button>
+		</WrapPanel>
+
+		<WrapPanel Orientation="Vertical">
+			<DatePicker SelectedDate="{Binding Path=BookingDate}" Name="BookDate"></DatePicker>
+			<ComboBox ItemsSource="{Binding Path=SelectCars}" SelectedValuePath="CarId" SelectedItem="{Binding Path=SelectedCar}" DisplayMemberPath="CarName" Name="BookingBox">
+			</ComboBox>
+			<Button Click="Book_Car">Book car on chosen Date</Button>
+		</WrapPanel>
+
+	</DockPanel>
+</Window>	
