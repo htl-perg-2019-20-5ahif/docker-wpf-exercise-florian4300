@@ -120,20 +120,20 @@ namespace CarBookingGUI
         public void FetchCars()
         {
 
-            var response = client.GetAsync("http://localhost:8300/cars").Result;
+            var response = client.GetAsync("http://localhost:5000/cars").Result;
             var result = JsonConvert.DeserializeObject<List<Car>>(response.Content.ReadAsStringAsync().Result);
             this.Cars = result;
             this.FilteredCars = result;
         }
         public void FetchFilteredCars(DateTime date)
         {
-            var response = client.GetAsync("http://localhost:8300/cars/"+date.Date.ToString()).Result;
+            var response = client.GetAsync("http://localhost:5000/cars/" + date.Date.ToString()).Result;
             var result = JsonConvert.DeserializeObject<List<Car>>(response.Content.ReadAsStringAsync().Result);
             this.FilteredCars = result;
         }
         public void FetchFilteredCarsDate(DateTime date)
         {
-            var response = client.GetAsync("http://localhost:8300/cars/" + date.Date.ToString()).Result;
+            var response = client.GetAsync("http://localhost:5000/cars/" + date.Date.ToString()).Result;
             var result = JsonConvert.DeserializeObject<List<Car>>(response.Content.ReadAsStringAsync().Result);
             this.SelectCars = result;
             this.SelectedCar = this.Cars.FirstOrDefault();
@@ -167,7 +167,7 @@ namespace CarBookingGUI
             bd.BookDate = this.BookingDate;
             var json = JsonConvert.SerializeObject(bd.BookDate.Date);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = client.PostAsync("http://localhost:8300/book/"+this.SelectedCar.CarId,data).Result;
+            var response = client.PostAsync("http://localhost:5000/book/" + this.SelectedCar.CarId,data).Result;
             var result = JsonConvert.DeserializeObject<Car>(response.Content.ReadAsStringAsync().Result);
             FetchFilteredCars(this.SelectedDate);
             FetchFilteredCarsDate(this.BookingDate);

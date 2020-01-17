@@ -8,10 +8,9 @@ namespace CarBookingService
 {
     public class CarBookingContext : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server=localhost;Database=CarBooking;Integrated Security=True");
-        }
+        public CarBookingContext(DbContextOptions<CarBookingContext> options)
+            : base(options)
+        { }
         public DbSet<Car> Cars { get; set; }
     }
 }

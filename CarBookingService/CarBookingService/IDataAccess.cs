@@ -6,7 +6,6 @@ namespace CarBookingService.Controllers
 {
     public interface IDataAccess : IDisposable
     {
-        public void InitDatabase();
         public IEnumerable<Car> GetCars();
 
         public Task<Car> BookCar(int carId, DateTime day);

@@ -12,11 +12,11 @@ namespace CarBookingService
     {
         public CarBookingContext context;
 
-        public void InitDatabase()
+        public DataAccess(CarBookingContext _context)
         {
-            context = new CarBookingContext();
-
+            context = _context;
         }
+
         public async Task<Car> BookCar(int carId, DateTime bookingdate)
         {
             Car c = context.Cars.Include(car => car.BookingDates).Where(c => c.CarId == carId).FirstOrDefault();

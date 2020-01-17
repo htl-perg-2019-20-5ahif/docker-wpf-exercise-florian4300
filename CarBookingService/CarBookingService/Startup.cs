@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CarBookingService.Controllers;
@@ -27,6 +28,8 @@ namespace CarBookingService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<CarBookingContext>(options => options.UseSqlServer(
+    configuration["ConnectionStrings:DefaultConnection"]));
             services.AddTransient<IDataAccess, DataAccess>();
             services.AddControllers();
         }
@@ -37,6 +40,12 @@ namespace CarBookingService
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                scope.ServiceProvider.GetService<CarBookingContext>().Database.Migrate();
+                scope.ServiceProvider.GetService<CarBookingContext>().Database.ExecuteSqlRaw(File.ReadAllText("Cars.sql"));
+
             }
 
             app.UseRouting();

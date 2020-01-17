@@ -20,7 +20,6 @@ namespace CarBookingService.Controllers
         {
             _logger = logger;
             this.dal = _dal;
-            this.dal.InitDatabase();
         }
 
         [HttpGet]
